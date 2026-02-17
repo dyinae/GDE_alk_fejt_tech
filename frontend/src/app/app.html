@@ -1,0 +1,17 @@
+<h1>Szállások</h1>
+
+<ng-container *ngIf="accommodations$ | async as accommodations">
+
+  <p>Darabszám: {{ accommodations.length }}</p>
+
+  <ul>
+    <li *ngFor="let acc of accommodations">
+      <strong>{{ acc.name }}</strong><br />
+      {{ acc.address }}<br />
+      {{ acc.price }} {{ acc.currency }}<br />
+      Szabad szobák: {{ acc.availableRooms }}
+      <hr />
+    </li>
+  </ul>
+
+</ng-container>

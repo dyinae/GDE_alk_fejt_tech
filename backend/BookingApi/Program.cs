@@ -1,26 +1,30 @@
-using BookingApi.Services;
+using BookingApi.Services;   // <-- EZ HIÁNYZOTT
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// SERVICES REGISZTRÁLÁSA
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
+// CORS (dev módban teljesen engedélyezve)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+// MongoService regisztrálása DI-be
 builder.Services.AddSingleton<MongoService>();
-builder.Services.AddSingleton<UserService>();
 
-// APP BUILD
 var app = builder.Build();
 
-// MIDDLEWARE
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseAuthorization();
+app.UseCors("AllowAll");
 
 app.MapControllers();
 
