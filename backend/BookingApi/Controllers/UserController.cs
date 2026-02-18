@@ -15,28 +15,69 @@ public class UsersController : ControllerBase
         _userService = userService;
     }
 
-    // REGISTER
     [HttpPost("register")]
-    public async Task<IActionResult> Register(User user)
+    public async Task<IActionResult> Register([FromBody] User user)
     {
+        if (string.IsNullOrWhiteSpace(user.Username) || 
+            string.IsNullOrWhiteSpace(user.Password))
+        {
+            return BadRequest(new
+            {
+                success = false,
+                message = "Username and password are required."
+            });
+        }
+
         var existingUser = await _userService.GetByUsernameAsync(user.Username);
 
         if (existingUser != null)
-            return BadRequest("Username already exists.");
+        {
+            return BadRequest(new
+            {
+                success = false,
+                message = "Username already exists."
+            });
+        }
 
         await _userService.CreateUserAsync(user);
-        return Ok("User registered successfully.");
+
+        return Created("", new
+        {
+            success = true,
+            message = "User registered successfully.",
+            username = user.Username
+        });
     }
 
-    // LOGIN
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
+        if (string.IsNullOrWhiteSpace(request.Username) || 
+            string.IsNullOrWhiteSpace(request.Password))
+        {
+            return BadRequest(new
+            {
+                success = false,
+                message = "Username and password are required."
+            });
+        }
+
         var user = await _userService.LoginAsync(request.Username, request.Password);
 
         if (user == null)
-            return Unauthorized("Invalid username or password.");
+        {
+            return Unauthorized(new
+            {
+                success = false,
+                message = "Invalid username or password."
+            });
+        }
 
-        return Ok("Login successful.");
+        return Ok(new
+        {
+            success = true,
+            message = "Login successful.",
+            username = user.Username
+        });
     }
 }

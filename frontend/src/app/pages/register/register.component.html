@@ -1,0 +1,56 @@
+<div class="wrapper">
+  <div class="card">
+    <h2>Regisztráció</h2>
+
+    <form #registerForm="ngForm" (ngSubmit)="register()" novalidate>
+
+      <input
+        type="text"
+        placeholder="Felhasználónév"
+        [(ngModel)]="username"
+        name="username"
+        required
+        #usernameInput="ngModel"
+        [disabled]="loading"
+      />
+
+      <small *ngIf="usernameInput.invalid && usernameInput.touched"
+             style="color:red;">
+        Felhasználónév kötelező
+      </small>
+
+      <input
+        type="password"
+        placeholder="Jelszó"
+        [(ngModel)]="password"
+        name="password"
+        required
+        minlength="4"
+        #passwordInput="ngModel"
+        [disabled]="loading"
+      />
+
+      <small *ngIf="passwordInput.invalid && passwordInput.touched"
+             style="color:red;">
+        Minimum 4 karakter
+      </small>
+
+      <button
+        type="submit"
+        [disabled]="loading || registerForm.invalid">
+
+        <span *ngIf="!loading">Regisztráció</span>
+        <span *ngIf="loading">Feldolgozás...</span>
+
+      </button>
+
+    </form>
+
+    <p *ngIf="message"
+       [ngStyle]="{ color: isError ? 'red' : 'green' }"
+       style="margin-top:15px;">
+      {{ message }}
+    </p>
+
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<h2>Szállások</h2>
+
+<div *ngFor="let acc of accommodations"
+     style="margin-bottom:20px; padding:10px; border:1px solid #ccc;">
+
+  <h3>{{ acc.name }}</h3>
+  <p><strong>Cím:</strong> {{ acc.address }}</p>
+  <p><strong>Szabad szobák:</strong> {{ acc.availableRooms }}</p>
+  <p><strong>Ár:</strong> {{ acc.price }} {{ acc.currency }}</p>
+
+</div>
