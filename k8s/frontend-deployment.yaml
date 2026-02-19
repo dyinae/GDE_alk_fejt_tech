@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booking-frontend
+  template:
+    metadata:
+      labels:
+        app: booking-frontend
+    spec:
+      containers:
+        - name: booking-frontend
+          image: ghcr.io/dyinae/booking-frontend:1.0
+          ports:
+            - containerPort: 80
