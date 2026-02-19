@@ -18,3 +18,12 @@ services:
     environment:
       - MongoDb__ConnectionString=mongodb://mongo:27017
       - MongoDb__DatabaseName=bookingdb
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: booking-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
