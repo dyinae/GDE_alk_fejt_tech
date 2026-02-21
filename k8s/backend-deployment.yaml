@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: booking-backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: booking-backend
@@ -19,6 +19,6 @@ spec:
             - containerPort: 8080
           env:
             - name: MongoDb__ConnectionString
-              value: mongodb://mongo:27017
+              value: mongodb://booking-mongo-mongodb.default.svc.cluster.local:27017
             - name: MongoDb__DatabaseName
               value: bookingdb
