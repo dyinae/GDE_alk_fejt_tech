@@ -11,12 +11,15 @@ spec:
     targetRevision: 15.*
     helm:
       values: |
-        auth:
-          enabled: false
+        architecture: standalone
 
         image:
+          registry: docker.io
           repository: bitnami/mongodb
           tag: latest
+
+        auth:
+          enabled: false
 
         persistence:
           enabled: true
@@ -25,76 +28,23 @@ spec:
         initdbScripts:
           init.js: |
             db = db.getSiblingDB('bookingdb');
-
+            db.createCollection("accommodations");
             db.accommodations.insertMany([
-              {
-                name: "Hotel Atraides",
-                address: "Arraken, Muadib út 10",
-                availableRooms: 5,
-                price: 250000,
-                currency: "HUF"
-              },
-              {
-                name: "Hotel Duncan",
-                address: "Tabr Sietch, Arany út 22",
-                availableRooms: 8,
-                price: 180000,
-                currency: "HUF"
-              },
-              {
-                name: "Birodalmi hotel",
-                address: "Halál Csillag, Császár utca 3",
-                availableRooms: 3,
-                price: 225000,
-                currency: "HUF"
-              },
-              {
-                name: "Pajkos Póni",
-                address: "Bree, Brill utca 12",
-                availableRooms: 6,
-                price: 150000,
-                currency: "HUF"
-              },
-              {
-                name: "Mélység Hotel",
-                address: "Moria, főcsarnok utca 8",
-                availableRooms: 4,
-                price: 170000,
-                currency: "HUF"
-              },
-              {
-                name: "Cadia Stands",
-                address: "Cadia, Birodalmi út 2",
-                availableRooms: 2,
-                price: 220000,
-                currency: "HUF"
-              },
-              {
-                name: "Vörös Hotel",
-                address: "Baal, Szentély utca 1",
-                availableRooms: 5,
-                price: 190000,
-                currency: "HUF"
-              },
-              {
-                name: "Erdő mélye",
-                address: "Tanith, első utca 1",
-                availableRooms: 7,
-                price: 210000,
-                currency: "HUF"
-              },
-              {
-                name: "Tündeház",
-                address: "Völgyzugoly, Erdő utca 4",
-                availableRooms: 9,
-                price: 110000,
-                currency: "HUF"
-              },
-              {
-                name: "Lovas Hotel",
-                address: "Rohan, mező út 6",
-                availableRooms: 3,
-                price: 160000,
-                currency: "HUF"
-              }
+              { name: "Hotel Atraides", address: "Arraken, Muadib út 10", availableRooms: 5, price: 250000, currency: "HUF" },
+              { name: "Hotel Duncan", address: "Tabr Sietch, Arany út 22", availableRooms: 8, price: 180000, currency: "HUF" },
+              { name: "Birodalmi hotel", address: "Halál Csillag, Császár utca 3", availableRooms: 3, price: 225000, currency: "HUF" },
+              { name: "Pajkos Póni", address: "Bree, Brill utca 12", availableRooms: 6, price: 150000, currency: "HUF" },
+              { name: "Mélység Hotel", address: "Moria, főcsarnok utca 8", availableRooms: 4, price: 170000, currency: "HUF" },
+              { name: "Cadia Stands", address: "Cadia, Birodalmi út 2", availableRooms: 2, price: 220000, currency: "HUF" },
+              { name: "Vörös Hotel", address: "Baal, Szentély utca 1", availableRooms: 5, price: 190000, currency: "HUF" },
+              { name: "Erdő mélye", address: "Tanith, első utca 1", availableRooms: 7, price: 210000, currency: "HUF" },
+              { name: "Tündeház", address: "Völgyzugoly, Erdő utca 4", availableRooms: 9, price: 110000, currency: "HUF" },
+              { name: "Lovas Hotel", address: "Rohan, mező út 6", availableRooms: 3, price: 160000, currency: "HUF" }       
             ]);
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
