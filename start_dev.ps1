@@ -1,3 +1,3 @@
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-kubectl apply -f k8s/root-app.yaml
+kubectl apply -f root-app.yaml
