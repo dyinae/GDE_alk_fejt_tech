@@ -1,18 +1,24 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: booking-root
-  namespace: argocd       
+  name: booking-backend
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/dyinae/GDE_alk_fejt_tech.git
-    targetRevision: dev
-    path: k8s
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: default     
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booking-backend
+  template:
+    metadata:
+      labels:
+        app: booking-backend
+    spec:
+      containers:
+        - name: booking-backend
+          image: ghcr.io/dyinae/booking-backend:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MongoDb__ConnectionString
+              value: mongodb://mongodb:27017
+            - name: MongoDb__DatabaseName
+              value: bookingdb
