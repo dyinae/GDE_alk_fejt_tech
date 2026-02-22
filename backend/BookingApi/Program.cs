@@ -3,33 +3,32 @@ using BookingApi.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
 builder.Services.AddSingleton<UserService>();
-
-
+builder.Services.AddSingleton<MongoService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
+    options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.AllowAnyOrigin()
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+            policy
+                .WithOrigins("http://localhost:30007")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         });
 });
-
-builder.Services.AddSingleton<MongoService>();
 
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseCors("AllowAll");
+// CORS MINDENKÉPP a MapControllers előtt
+app.UseCors("AllowFrontend");
 
 app.MapControllers();
 
