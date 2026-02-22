@@ -19,6 +19,6 @@ spec:
             - containerPort: 8080
           env:
             - name: MongoDb__ConnectionString
-              value: mongodb://booking-mongo-mongodb.default.svc.cluster.local:27017
+              value: mongodb://mongodb:27017
             - name: MongoDb__DatabaseName
               value: bookingdb
