@@ -1,0 +1,19 @@
+#.net
+bin/
+obj/
+
+#vistual stud
+.vs/
+*.user
+*.suo
+
+#node
+node_modules/
+dist/
+
+#logs
+*.log
+
+#os
+.DS_Store
+Thumbs.db
