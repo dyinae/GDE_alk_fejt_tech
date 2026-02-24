@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: booking-backend
-          image: ghcr.io/dyinae/booking-backend:1.0
+          image: ghcr.io/dyinae/gde_alk_fej_tech-backend:1.0.0
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           env:
@@ -22,3 +23,6 @@ spec:
               value: mongodb://mongodb:27017
             - name: MongoDb__DatabaseName
               value: bookingdb
+
+
+#test auto build
