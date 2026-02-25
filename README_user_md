@@ -1,0 +1,48 @@
+Felhasználói útmutató
+
+ELŐFELTÉTELEK
+-docker desktop, 
+-kubectl, 
+-git
+-Powershell (winndows környezetben)
+
+A RENDSZER CÉLJA
+-Regisztráció
+-Bejelentkezls
+-Szállások megnézése
+
+ELINDÍTÁSA:
+1, PROJEKT KLÓNOZÁSA
+
+mkdir teszmappa
+cd tesztmappa
+git clone https://github.com/dyinae/GDE_alk_fejt_tech.git
+cd GDE_alk_fejt_tech
+git checkout dev
+
+2, RENDSZER INDÍTÁSA
+run start_dev.ps1
+az inicializálás eltarthat 1-2 percig, érdemes ezzel a parancsal ellenőrizni: kubectl get pods -A
+ha futtatási hibába futunk érdemes ezt megfuttatni:
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+3, elérés és indítás
+    1 darab terminálra lesz szükség
+
+az admin jelszavát ezzel a parancsal kapjuk meg:
+
+kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | %{ [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_)) }
+felhasználónév: admin
+
+4, ELÉRÉSEK
+
+application: (frontend)
+http://localhost:30007/
+
+
+MŰKÖDÉS:
+Ha elsőre járunk itt akkor a Regisztrációt szükséges véghez vinni (jelszó minimum 4 karakter), a folyamat a bejlentkezéshez automatikusan átirányít.
+
+Ha már van regisztrációnk a Bejelentkezést választva bejelentkezhetünk a már regisztrált felhasználónkal.
+
+Bejelentkezés után láthatjuk a 10 darab fantasztius szállást.
