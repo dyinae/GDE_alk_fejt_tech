@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: booking-frontend
-          image: ghcr.io/dyinae/gde_alk_fej_tech-frontend:1.0.18
+          image: ghcr.io/dyinae/gde_alk_fej_tech-frontend:1.0.19
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
